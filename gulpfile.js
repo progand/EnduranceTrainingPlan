@@ -1,9 +1,10 @@
 var gulp = require('gulp'),
         templateCache = require('gulp-angular-templatecache'),
-        concat = require('gulp-concat');
+        concat = require('gulp-concat'),
+        uglify = require('gulp-uglifyjs');
 
-gulp.task('default', function () {
-    gulp.src('public_html/templates/**/*.html')
+gulp.task('angular-templatecache', function () {
+    gulp.src('public_html/templates/*.html')
             .pipe(templateCache({
                 standalone: true,
                 root: '/templates/',
@@ -12,4 +13,18 @@ gulp.task('default', function () {
             .pipe(gulp.dest('public_html/build/compiled_templates'));
 });
 
+gulp.task('scripts', function () {
+    gulp.src([
+        'public_html/js/libs/*.js',
+        'public_html/angular.js/angular.js/angular.js',
+        'public_html/build/compiled_templates/*.js',
+        'public_html/js/*.js'
+    ])
+            .pipe(concat('training-plan.js', {newLine: ';\n'}))
+            .pipe(gulp.dest('public_html/build/'))
+            .pipe(uglify('training-plan.min.js', {
+                mangle: false
+            }))
+            .pipe(gulp.dest('public_html/build/'));
+});
 
