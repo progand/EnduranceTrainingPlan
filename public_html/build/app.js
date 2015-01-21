@@ -462,3 +462,4 @@ app.controller('TrainingPlanCtrl', function ($scope) {
     } catch (exc) {
     }
 });
+
