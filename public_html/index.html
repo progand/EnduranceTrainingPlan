@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            table, th, td {
+                border: 1px solid black;
+            }
+            table{
+                border-collapse: collapse;
+            }
+            td:not(:first-child){
+                text-align: center;
+            }
+            td[colspan="25"]{
+                color: #7A7A7A;
+                font-weight: bold;
+            }
+            .sport-part{
+                font-size: 0.8em;
+            }
+            .sport-part-label{
+                text-align: right;
+            }
+            .training-plan-export{
+                float: right;
+            }
+        </style>
+    </head>
+    <body>
+        <form ng-app="trainingPlan" ng-controller="TrainingPlanCtrl">
+            <p>
+                <label for="training-plan-sport">Вид спорту:</label>                  
+                <select ng-model="sport" ng-options="sport as sport.name for sport in sports" id="training-plan-sport"></select>
+            </p>
+            <p>
+                <label for="training-plan-summary">Сумарний річний об’єм тренувань, годин чи хвилин:</label> <input type="number" ng-model="summary" id="training-plan-summary"/>
+                <span class='training-plan-export'>
+                    <span>Експорт в:</span>
+                    <a download="training_plan.xls"  href="#" onclick="return ExcellentExport.excel(this, document.querySelector('table'), 'Training plan');">Excel</a>
+                    <a download="training_plan.csv"  href="#" onclick="return ExcellentExport.csv(this, document.querySelector('table'));">CSV</a>
+                </span>
+            </p>   
+            <table>
+                <thead>
+                    <tr>
+                        <th>4-тижневий цикл</th>
+                        <th ng-repeat="stage in sport.stages" colspan="{{stage.weeks.length}}">{{$index + 1}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Етап підготовки</td>
+                        <td ng-repeat="stage in sport.stages" colspan="{{stage.weeks.length}}">{{stage.name}}</td>
+                    </tr>
+                    <tr>
+                        <td>% річного циклу</td>
+                        <td ng-repeat="stage in sport.stages" colspan="{{stage.weeks.length}}">{{stage.percentOfSummary}}</td>
+                    </tr>
+                    <tr>
+                        <td>Об’єм циклу</td>
+                        <td ng-repeat="stage in sport.stages" colspan="{{stage.weeks.length}}">{{summary * stage.percentOfSummary / 100| number : 1}}</td>
+                    </tr>
+                    <tr>
+                        <td>Тиждень</td>
+                        <td ng-repeat="stage in sport.stages| flattenWeeks">{{$index + 1}}</td>
+                    </tr>
+                    <tr>
+                        <td>Періодизація (% від обєму 4-тижневого циклу)</td>
+                        <td ng-repeat="stage in sport.stages| flattenWeeks">{{stage.periodization}}</td>
+                    </tr>
+                    <tr style="color: #3276b1">
+                        <td>Тижневий об’єм</td>
+                        <td ng-repeat="stage in sport.stages| flattenWeeks">{{summary * stage.parent.percentOfSummary * stage.periodization / 10000| number : 1}}</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="{{sport.stages.length * sport.stages[0].weeks.length + 1}}">&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="{{sport.stages.length * sport.stages[0].weeks.length + 1}}">Нижче: відсотковий розподіл тижневого об’єму між окремими тренувальними компонентами підготовки на кожному 4-тижневому циклі</td>
+                    </tr>
+
+                    <tr ng-repeat="component in components">
+                        <td>{{component.label}}</td>
+                        <td ng-repeat="stage in sport.stages" colspan="{{stage.weeks.length}}">{{stage.componentPercents[component.name]}}</td>
+                    </tr> 
+
+                    <tr>
+                        <td colspan="{{sport.stages.length * sport.stages[0].weeks.length + 1}}">&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="{{sport.stages.length * sport.stages[0].weeks.length + 1}}">Нижче: розподіл часу між різними видами діяльності (помножте тижневий об’єм тренувального компонента на відсоткову величину для конкретного виду діяльності)</td>
+                    </tr>
+
+                    <tr ng-repeat="component in components">
+                        <td>{{component.label}} <p ng-show="sport.showPartsFor[component.name]" ng-repeat="part in sport.parts"  class="sport-part sport-part-label">{{part.name}}</p></td>
+                        <td ng-repeat="stage in sport.stages| flattenWeeks">                            
+                            {{summary * stage.parent.componentPercents[component.name] * stage.parent.percentOfSummary * stage.periodization / 1000000| number : 1}}
+                            <p ng-show="sport.showPartsFor[component.name]" ng-repeat="part in sport.parts"  class="sport-part">{{summary * part.componentPercents[component.name] * stage.parent.componentPercents[component.name] * stage.parent.percentOfSummary * stage.periodization / 100000000| number : 1}}</p>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </form>
+
+        <script src="/angular.js/angular.js/angular.js"></script>
+        <script src="/js/libs/excellentexport.js"></script>
+        <script src="/js/app.js"></script>
+    </body>
+</html>
