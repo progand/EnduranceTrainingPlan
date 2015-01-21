@@ -44,11 +44,11 @@ and open the template in the editor.
                 <label for="training-plan-summary">Сумарний річний об’єм тренувань, годин чи хвилин:</label> <input type="number" ng-model="summary" id="training-plan-summary"/>
                 <span class='training-plan-export'>
                     <span>Експорт в:</span>
-                    <a download="training_plan.xls"  href="#" onclick="return ExcellentExport.excel(this, document.querySelector('table'), 'Training plan');">Excel</a>
-                    <a download="training_plan.csv"  href="#" onclick="return ExcellentExport.csv(this, document.querySelector('table'));">CSV</a>
+                    <a download="training_plan.xls"  href="#" onclick="return ExcellentExport.excel(this, 'training-plan-table', 'Training plan');">Excel</a>
+                    <a download="training_plan.csv"  href="#" onclick="return ExcellentExport.csv(this, 'training-plan-table');">CSV</a>
                 </span>
             </p>   
-            <table>
+            <table id='training-plan-table'>
                 <thead>
                     <tr>
                         <th>4-тижневий цикл</th>
