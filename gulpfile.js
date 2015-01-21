@@ -7,12 +7,9 @@ gulp.task('default', function () {
             .pipe(templateCache({
                 standalone: true,
                 root: '/templates/',
-                module: 'trainingPlan'
+                module: 'templates'
             }))
             .pipe(gulp.dest('public_html/build/compiled_templates'));
-    gulp.src(['public_html/js/app.js', 'public_html/build/compiled_templates/templates.js'])
-            .pipe(concat('app.js'))
-            .pipe(gulp.dest('./public_html/build/'));
 });
 
 

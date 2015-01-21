@@ -12,7 +12,14 @@ var app = angular.module('trainingPlan', [])
                 });
                 return flatten;
             };
+        })
+        .directive('trainingPlan', function () {
+            return {
+                restrict: 'A',
+                templateUrl: 'training_plan.html'
+            };
         });
+;
 
 app.controller('TrainingPlanCtrl', function ($scope) {
     $scope.summary = 100;

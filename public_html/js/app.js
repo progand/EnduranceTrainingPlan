@@ -1,4 +1,4 @@
-var app = angular.module('trainingPlan', [])
+var app = angular.module('trainingPlan', ['templates'])
         .filter('flattenWeeks', function () {
             return function (rows) {
                 var flatten = [];
@@ -12,7 +12,14 @@ var app = angular.module('trainingPlan', [])
                 });
                 return flatten;
             };
+        })
+        .directive('trainingPlan', function () {
+            return {
+                restrict: 'ECMA',
+                templateUrl: '/templates/training_plan.html'
+            };
         });
+;
 
 app.controller('TrainingPlanCtrl', function ($scope) {
     $scope.summary = 100;
