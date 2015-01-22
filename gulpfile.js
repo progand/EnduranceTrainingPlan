@@ -28,7 +28,7 @@ gulp.task('build', function () {
             .pipe(gulp.dest('public_html/build/'));
 });
 
-gulp.task('watch', function () {
+gulp.task('default', function () {
     gulp.watch('public_html/templates/*.html', ['angular-templatecache']);
 });
 
