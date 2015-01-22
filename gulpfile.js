@@ -2,7 +2,9 @@ var gulp = require('gulp'),
         templateCache = require('gulp-angular-templatecache'),
         concat = require('gulp-concat'),
         uglify = require('gulp-uglifyjs'),
-        runSequence = require('run-sequence');
+        runSequence = require('run-sequence'),
+        _ = require('lodash'),
+        karma = require('karma').server;
 
 gulp.task('angular-templatecache', function () {
     gulp.src('public_html/templates/*.html')
@@ -30,12 +32,43 @@ gulp.task('scripts', function () {
 });
 
 gulp.task('build', function () {
-     runSequence('angular-templatecache', 'scripts');
+    runSequence('angular-templatecache', 'scripts');
 });
 
 gulp.task('watch', function () {
     gulp.watch('public_html/templates/*.html', ['angular-templatecache']);
 });
+
+
+//one could also externalize common config into a separate file,
+//ex.: var karmaCommonConf = require('./karma-common-conf.js');
+var karmaCommonConf = {
+    browsers: ['PhantomJS'],
+    frameworks: ['jasmine'],
+    files: [
+        'public_html/js/libs/*.js',
+        'public_html/angular.js/angular.js/angular.js',
+        'public_html/build/compiled_templates/*.js',
+        'public_html/js/*.js',
+        'test/*.spec.js'
+    ]
+};
+
+/**
+ * Run test once and exit
+ */
+gulp.task('test', function (done) {
+    karma.start(_.assign({}, karmaCommonConf, {singleRun: true}), done);
+});
+
+/**
+ * Watch for file changes and re-run tests on each change
+ */
+gulp.task('tdd', function (done) {
+    karma.start(karmaCommonConf, done);
+});
+
+
 
 // Default Task
 gulp.task('default', ['angular-templatecache', 'watch']);
