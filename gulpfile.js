@@ -1,7 +1,8 @@
 var gulp = require('gulp'),
         templateCache = require('gulp-angular-templatecache'),
         concat = require('gulp-concat'),
-        uglify = require('gulp-uglifyjs');
+        uglify = require('gulp-uglifyjs'),
+        runSequence = require('run-sequence');
 
 gulp.task('angular-templatecache', function () {
     gulp.src('public_html/templates/*.html')
@@ -13,7 +14,7 @@ gulp.task('angular-templatecache', function () {
             .pipe(gulp.dest('public_html/build/compiled_templates'));
 });
 
-gulp.task('build', function () {
+gulp.task('scripts', function () {
     gulp.src([
         'public_html/js/libs/*.js',
         'public_html/angular.js/angular.js/angular.js',
@@ -26,6 +27,10 @@ gulp.task('build', function () {
                 mangle: false
             }))
             .pipe(gulp.dest('public_html/build/'));
+});
+
+gulp.task('build', function () {
+     runSequence('angular-templatecache', 'scripts');
 });
 
 gulp.task('watch', function () {
