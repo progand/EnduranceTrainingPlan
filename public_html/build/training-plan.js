@@ -17465,57 +17465,5 @@ app.controller('TrainingPlanCtrl', function ($scope) {
         }
     ];
 
-    $scope.sport = $scope.sports[0];
-
-    try {
-        (function (sports) {
-            sports.forEach(function (sport) {
-                //check stages summary percent
-                var stagesPartsSummary = sport.stages.reduce(function (oldValue, newValue) {
-                    return (typeof oldValue === "object" ? oldValue.percentOfSummary : oldValue) + newValue.percentOfSummary;
-                });
-                if (stagesPartsSummary !== 50) {
-                    console.log("Invalid stages summary percents (" + stagesPartsSummary + " in summary) for " + sport.name);
-                }
-
-
-                //check parts
-                Array.isArray(sport.parts) && Object.keys(sport.parts[0].componentPercents).forEach(function (componentName, index) {
-                    var componentPartsSummary = 0;
-                    if (!sport.showPartsFor[componentName])
-                        return;
-
-                    sport.parts.forEach(function (part) {
-                        componentPartsSummary += part.componentPercents[componentName];
-                    });
-                    if (componentPartsSummary !== 100) {
-                        console.log("Invalid percents (" + componentPartsSummary + " in summary) for component " + componentName + " of " + sport.name);
-                    }
-                });
-
-                //check stages
-                sport.stages.forEach(function (stage, index) {
-                    var stageSummary = 0, weeksSummary = 0;
-
-                    //check components
-                    Object.keys(stage.componentPercents).forEach(function (componentName) {
-                        stageSummary += stage.componentPercents[componentName]
-                    });
-                    if (stageSummary !== 100) {
-                        console.log("Invalid component percents (" + stageSummary + " in summary) for stage #" + index + " '" + stage.name + "' of " + sport.name);
-                    }
-
-                    //check weeks
-                    weeksSummary = stage.weeks.reduce(function (oldValue, newValue) {
-                        return (typeof oldValue === "object" ? oldValue.periodization : oldValue) + newValue.periodization;
-                    });
-                    if (weeksSummary !== 100) {
-                        console.log("Invalid weeks percents (" + weeksSummary + " in summary) for stage #" + index + " '" + stage.name + "' of " + sport.name);
-                    }
-                });
-
-            });
-        })($scope.sports);
-    } catch (exc) {
-    }
+    $scope.sport = $scope.sports[0];    
 });
