@@ -14,7 +14,7 @@ Load script:
 <script src="/build/training-plan.min.js"></script>
 ```
 
-Add html:
+Add html (include before script tag):
 ```html
 <div ng-app="trainingPlan" ng-controller="TrainingPlanCtrl" training-plan></div>
 ```
