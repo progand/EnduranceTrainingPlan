@@ -32,7 +32,7 @@ gulp.task('scripts', function () {
 });
 
 gulp.task('build', function () {
-    runSequence('angular-templatecache', 'scripts');
+    runSequence('angular-templatecache', 'test', 'scripts');
 });
 
 gulp.task('watch', function () {
