@@ -47,7 +47,8 @@ var karmaCommonConf = {
     frameworks: ['jasmine'],
     files: [
         'public_html/js/libs/*.js',
-        'public_html/angular.js/angular.js/angular.js',
+        'bower_components/angular/angular.js',
+        'bower_components/angular-mocks/angular-mocks.js',
         'public_html/build/compiled_templates/*.js',
         'public_html/js/*.js',
         'test/*.spec.js'
