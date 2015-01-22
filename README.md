@@ -1,4 +1,4 @@
-# EnduranceTrainingPlan
+# EnduranceTrainingPlan (Ukrainian only)
 
 This is Angular-based web-app for endurance training planning. 
 All templates and dependencies (including Angular) was packed in one file. 
