@@ -13,7 +13,7 @@ gulp.task('angular-templatecache', function () {
             .pipe(gulp.dest('public_html/build/compiled_templates'));
 });
 
-gulp.task('scripts', function () {
+gulp.task('build', function () {
     gulp.src([
         'public_html/js/libs/*.js',
         'public_html/angular.js/angular.js/angular.js',
@@ -26,5 +26,9 @@ gulp.task('scripts', function () {
                 mangle: false
             }))
             .pipe(gulp.dest('public_html/build/'));
+});
+
+gulp.task('watch', function () {
+    gulp.watch('public_html/templates/*.html', ['angular-templatecache']);
 });
 

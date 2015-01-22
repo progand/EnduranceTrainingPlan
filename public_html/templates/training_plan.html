@@ -72,8 +72,6 @@
                     <p ng-show="sport.showPartsFor[component.name]" ng-repeat="part in sport.parts"  class="sport-part">{{summary * part.componentPercents[component.name] * stage.parent.componentPercents[component.name] * stage.parent.percentOfSummary * stage.periodization / 100000000| number : 1}}</p>
                 </td>
             </tr>
-
         </tbody>
     </table>
-
 </form>
