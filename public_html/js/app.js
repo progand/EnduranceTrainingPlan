@@ -85,7 +85,7 @@ app.controller('TrainingPlanCtrl', function ($scope) {
             stages: [
                 {
                     name: "Базовий",
-                    percentOfSummary: 7,
+                    percentOfSummary: 7.5,
                     weeks: [
                         {
                             periodization: 23
@@ -112,7 +112,7 @@ app.controller('TrainingPlanCtrl', function ($scope) {
                 },
                 {
                     name: "Базовий",
-                    percentOfSummary: 8,
+                    percentOfSummary: 8.5,
                     weeks: [
                         {
                             periodization: 23
@@ -139,7 +139,7 @@ app.controller('TrainingPlanCtrl', function ($scope) {
                 },
                 {
                     name: "Інтенсивний",
-                    percentOfSummary: 9,
+                    percentOfSummary: 9.5,
                     weeks: [
                         {
                             periodization: 23
@@ -166,7 +166,7 @@ app.controller('TrainingPlanCtrl', function ($scope) {
                 },
                 {
                     name: "Інтенсивний",
-                    percentOfSummary: 9.5,
+                    percentOfSummary: 10,
                     weeks: [
                         {
                             periodization: 20
@@ -186,9 +186,9 @@ app.controller('TrainingPlanCtrl', function ($scope) {
                         distance: 10,
                         race: 5,
                         interval: 10,
-                        superDistance: 45,
+                        superDistance: 50,
                         mountainInterval: 10,
-                        force: 15
+                        force: 10
                     }
                 },
                 {
