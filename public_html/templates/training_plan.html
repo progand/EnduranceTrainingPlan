@@ -1,3 +1,28 @@
+<style>
+    table, th, td {
+        border: 1px solid black;
+    }
+    table{
+        border-collapse: collapse;
+    }
+    td:not(:first-child){
+        text-align: center;
+    }
+    td[colspan="25"]{
+        color: #7A7A7A;
+        font-weight: bold;
+    }
+    .sport-part{
+        font-size: 0.8em;
+    }
+    .sport-part-label{
+        text-align: right;
+    }
+    .training-plan-export{
+        float: right;
+    }
+</style>
+
 <form ng-app="trainingPlan" ng-controller="TrainingPlanCtrl">
     <p>
         <label for="training-plan-sport">Вид спорту:</label>                  
