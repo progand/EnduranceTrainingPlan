@@ -26,12 +26,13 @@ describe('Unit: Data', function () {
     it('should be equal to 100 all summary sport parts percent',
             function () {
                 scope.sports.forEach(function (sport) {
-                    Array.isArray(sport.parts) && Object.keys(sport.parts[0].componentPercents).forEach(function (componentName) {
+                    //sport.parts[0].componentPercent
+                    Array.isArray(sport.parts) && Object.keys(sport.showPartsFor).forEach(function (componentName) {
                         var componentPartsSummary = 0;
                         if (!sport.showPartsFor[componentName])
                             return;
                         sport.parts.forEach(function (part) {
-                            componentPartsSummary += part.componentPercents[componentName];
+                            componentPartsSummary += part.componentPercents[componentName] || 0;
                         });
                         expect(componentPartsSummary).toBe(100);
                     });

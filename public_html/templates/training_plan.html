@@ -91,7 +91,7 @@
             </tr>
 
             <tr ng-repeat="component in components">
-                <td>{{component.label}} <p ng-show="sport.showPartsFor[component.name]" ng-repeat="part in sport.parts"  class="sport-part sport-part-label">{{part.name}} {{part.componentPercents[component.name]}}%</p></td>
+                <td>{{component.label}} <p ng-show="sport.showPartsFor[component.name] && part.componentPercents[component.name]" ng-repeat="part in sport.parts"  class="sport-part sport-part-label">{{part.name}} {{part.componentPercents[component.name]}}%</p></td>
                 <td ng-repeat="stage in sport.stages| flattenWeeks">                            
                     {{summary * stage.parent.componentPercents[component.name] * stage.parent.percentOfSummary * stage.periodization / 1000000| number : 1}}
                     <p ng-show="sport.showPartsFor[component.name]" ng-repeat="part in sport.parts"  class="sport-part">{{summary * part.componentPercents[component.name] * stage.parent.componentPercents[component.name] * stage.parent.percentOfSummary * stage.periodization / 100000000| number : 1}}</p>
