@@ -35,7 +35,7 @@ app.controller('TrainingPlanCtrl', function ($scope) {
 
     $scope.sports = [
         {
-            name: "Тріатлон (ironman та half-ironman)",
+            name: "Тріатлон (залізна та напівзалізна дистанції)",
             showPartsFor: {
                 speed: true,
                 distance: true,
