@@ -34,7 +34,213 @@ app.controller('TrainingPlanCtrl', function ($scope) {
         {name: "force", label: "Сила"}];
 
     $scope.sports = [
-         {
+        {
+            name: "Дуатлон (спринтерська та середня дистанції)",
+            showPartsFor: {
+                speed: true,
+                distance: true,
+                race: true,
+                interval: true,
+                superDistance: true,
+                mountainInterval: true,
+                force: false
+            },
+            parts: [
+                {
+                    name: "Плаванння",
+                    componentPercents: {                       
+                        race: 20
+                    }
+                },
+                {
+                    name: "Велосипед",
+                    componentPercents: {
+                        speed: 50,
+                        distance: 60,
+                        race: 50,
+                        interval: 60,
+                        superDistance: 60,
+                        mountainInterval: 60
+                    }
+                },
+                {
+                    name: "Біг",
+                    componentPercents: {
+                        speed: 50,
+                        distance: 40,
+                        race: 30,
+                        interval: 40,
+                        superDistance: 40,
+                        mountainInterval: 40
+                    }
+                }
+            ],
+            stages: [
+                {
+                    name: "Базовий",
+                    percentOfSummary: 7,
+                    weeks: [
+                        {
+                            periodization: 23
+                        },
+                        {
+                            periodization: 26
+                        },
+                        {
+                            periodization: 29
+                        },
+                        {
+                            periodization: 22
+                        }
+                    ],
+                    componentPercents: {
+                        speed: 0,
+                        distance: 15,
+                        race: 0,
+                        interval: 0,
+                        superDistance: 60,
+                        mountainInterval: 5,
+                        force: 20
+                    }
+                },
+                {
+                    name: "Базовий",
+                    percentOfSummary: 8,
+                    weeks: [
+                        {
+                            periodization: 23
+                        },
+                        {
+                            periodization: 26
+                        },
+                        {
+                            periodization: 29
+                        },
+                        {
+                            periodization: 22
+                        }
+                    ],
+                    componentPercents: {
+                        speed: 0,
+                        distance: 15,
+                        race: 0,
+                        interval: 5,
+                        superDistance: 55,
+                        mountainInterval: 5,
+                        force: 20
+                    }
+                },
+                {
+                    name: "Інтенсивний",
+                    percentOfSummary: 9,
+                    weeks: [
+                        {
+                            periodization: 23
+                        },
+                        {
+                            periodization: 26
+                        },
+                        {
+                            periodization: 29
+                        },
+                        {
+                            periodization: 22
+                        }
+                    ],
+                    componentPercents: {
+                        speed: 5,
+                        distance: 15,
+                        race: 0,
+                        interval: 10,
+                        superDistance: 50,
+                        mountainInterval: 10,
+                        force: 10
+                    }
+                },
+                {
+                    name: "Інтенсивний",
+                    percentOfSummary: 9.5,
+                    weeks: [
+                        {
+                            periodization: 20
+                        },
+                        {
+                            periodization: 30
+                        },
+                        {
+                            periodization: 20
+                        },
+                        {
+                            periodization: 30
+                        }
+                    ],
+                    componentPercents: {
+                        speed: 5,
+                        distance: 15,
+                        race: 5,
+                        interval: 10,
+                        superDistance: 45,
+                        mountainInterval: 10,
+                        force: 10
+                    }
+                },
+                {
+                    name: "Піковий",
+                    percentOfSummary: 8.5,
+                    weeks: [
+                        {
+                            periodization: 20
+                        },
+                        {
+                            periodization: 30
+                        },
+                        {
+                            periodization: 20
+                        },
+                        {
+                            periodization: 30
+                        }
+                    ],
+                    componentPercents: {
+                        speed: 5,
+                        distance: 15,
+                        race: 10,
+                        interval: 10,
+                        superDistance: 50,
+                        mountainInterval: 0,
+                        force: 10
+                    }
+                },
+                {
+                    name: "Змагання",
+                    percentOfSummary: 8,
+                    weeks: [
+                        {
+                            periodization: 20
+                        },
+                        {
+                            periodization: 30
+                        },
+                        {
+                            periodization: 20
+                        },
+                        {
+                            periodization: 30
+                        }
+                    ],
+                    componentPercents: {
+                        speed: 5,
+                        distance: 10,
+                        race: 15,
+                        interval: 10,
+                        superDistance: 50,
+                        mountainInterval: 0,
+                        force: 10
+                    }
+                }
+            ]
+        },
+        {
             name: "Довгий дуатлон",
             showPartsFor: {
                 speed: true,
