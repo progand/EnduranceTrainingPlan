@@ -17047,7 +17047,7 @@ var styleDirective = valueFn({
 
 })(window, document);
 angular.element(document).find('head').append('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak{display:none;}ng\\:form{display:block;}</style>');;
-angular.module("templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("/templates/training_plan.html","<form ng-app=\"trainingPlan\" ng-controller=\"TrainingPlanCtrl\">\n    <p>\n        <label for=\"training-plan-sport\">Вид спорту:</label>                  \n        <select ng-model=\"sport\" ng-options=\"sport as sport.name for sport in sports\" id=\"training-plan-sport\"></select>\n    </p>\n    <p>\n        <label for=\"training-plan-summary\">Сумарний річний об’єм тренувань, годин чи хвилин:</label> <input type=\"number\" ng-model=\"summary\" id=\"training-plan-summary\"/>\n        <span class=\'training-plan-export\'>\n            <span>Експорт в:</span>\n            <a download=\"training_plan.xls\"  href=\"#\" onclick=\"return ExcellentExport.excel(this, \'training-plan-table\', \'Training plan\');\">Excel</a>\n            <a download=\"training_plan.csv\"  href=\"#\" onclick=\"return ExcellentExport.csv(this, \'training-plan-table\');\">CSV</a>\n        </span>\n    </p>   \n    <table id=\'training-plan-table\'>\n        <thead>\n            <tr>\n                <th>4-тижневий цикл</th>\n                <th ng-repeat=\"stage in sport.stages\" colspan=\"{{stage.weeks.length}}\">{{$index + 1}}</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>Етап підготовки</td>\n                <td ng-repeat=\"stage in sport.stages\" colspan=\"{{stage.weeks.length}}\">{{stage.name}}</td>\n            </tr>\n            <tr>\n                <td>% річного циклу</td>\n                <td ng-repeat=\"stage in sport.stages\" colspan=\"{{stage.weeks.length}}\">{{stage.percentOfSummary}}</td>\n            </tr>\n            <tr>\n                <td>Об’єм циклу</td>\n                <td ng-repeat=\"stage in sport.stages\" colspan=\"{{stage.weeks.length}}\">{{summary * stage.percentOfSummary / 100| number : 1}}</td>\n            </tr>\n            <tr>\n                <td>Тиждень</td>\n                <td ng-repeat=\"stage in sport.stages| flattenWeeks\">{{$index + 1}}</td>\n            </tr>\n            <tr>\n                <td>Періодизація (% від обєму 4-тижневого циклу)</td>\n                <td ng-repeat=\"stage in sport.stages| flattenWeeks\">{{stage.periodization}}</td>\n            </tr>\n            <tr style=\"color: #3276b1\">\n                <td>Тижневий об’єм</td>\n                <td ng-repeat=\"stage in sport.stages| flattenWeeks\">{{summary * stage.parent.percentOfSummary * stage.periodization / 10000| number : 1}}</td>\n            </tr>\n\n            <tr>\n                <td colspan=\"{{sport.stages.length * sport.stages[0].weeks.length + 1}}\">&nbsp;</td>\n            </tr>\n\n            <tr>\n                <td colspan=\"{{sport.stages.length * sport.stages[0].weeks.length + 1}}\">Нижче: відсотковий розподіл тижневого об’єму між окремими тренувальними компонентами підготовки на кожному 4-тижневому циклі</td>\n            </tr>\n\n            <tr ng-repeat=\"component in components\">\n                <td>{{component.label}}</td>\n                <td ng-repeat=\"stage in sport.stages\" colspan=\"{{stage.weeks.length}}\">{{stage.componentPercents[component.name]}}</td>\n            </tr> \n\n            <tr>\n                <td colspan=\"{{sport.stages.length * sport.stages[0].weeks.length + 1}}\">&nbsp;</td>\n            </tr>\n\n            <tr>\n                <td colspan=\"{{sport.stages.length * sport.stages[0].weeks.length + 1}}\">Нижче: розподіл часу між різними видами діяльності (помножте тижневий об’єм тренувального компонента на відсоткову величину для конкретного виду діяльності)</td>\n            </tr>\n\n            <tr ng-repeat=\"component in components\">\n                <td>{{component.label}} <p ng-show=\"sport.showPartsFor[component.name]\" ng-repeat=\"part in sport.parts\"  class=\"sport-part sport-part-label\">{{part.name}} {{part.componentPercents[component.name]}}%</p></td>\n                <td ng-repeat=\"stage in sport.stages| flattenWeeks\">                            \n                    {{summary * stage.parent.componentPercents[component.name] * stage.parent.percentOfSummary * stage.periodization / 1000000| number : 1}}\n                    <p ng-show=\"sport.showPartsFor[component.name]\" ng-repeat=\"part in sport.parts\"  class=\"sport-part\">{{summary * part.componentPercents[component.name] * stage.parent.componentPercents[component.name] * stage.parent.percentOfSummary * stage.periodization / 100000000| number : 1}}</p>\n                </td>\n            </tr>\n        </tbody>\n    </table>\n</form>");}]);;
+angular.module("templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("/templates/training_plan.html","<style>\n    table, th, td {\n        border: 1px solid black;\n    }\n    table{\n        border-collapse: collapse;\n    }\n    td:not(:first-child){\n        text-align: center;\n    }\n    td[colspan=\"25\"]{\n        color: #7A7A7A;\n        font-weight: bold;\n    }\n    .sport-part{\n        font-size: 0.8em;\n    }\n    .sport-part-label{\n        text-align: right;\n    }\n    .training-plan-export{\n        float: right;\n    }\n</style>\n\n<form ng-app=\"trainingPlan\" ng-controller=\"TrainingPlanCtrl\">\n    <p>\n        <label for=\"training-plan-sport\">Вид спорту:</label>                  \n        <select ng-model=\"sport\" ng-options=\"sport as sport.name for sport in sports\" id=\"training-plan-sport\"></select>\n    </p>\n    <p>\n        <label for=\"training-plan-summary\">Сумарний річний об’єм тренувань, годин чи хвилин:</label> <input type=\"number\" ng-model=\"summary\" id=\"training-plan-summary\"/>\n        <span class=\'training-plan-export\'>\n            <span>Експорт в:</span>\n            <a download=\"training_plan.xls\"  href=\"#\" onclick=\"return ExcellentExport.excel(this, \'training-plan-table\', \'Training plan\');\">Excel</a>\n            <a download=\"training_plan.csv\"  href=\"#\" onclick=\"return ExcellentExport.csv(this, \'training-plan-table\');\">CSV</a>\n        </span>\n    </p>   \n    <table id=\'training-plan-table\'>\n        <thead>\n            <tr>\n                <th>4-тижневий цикл</th>\n                <th ng-repeat=\"stage in sport.stages\" colspan=\"{{stage.weeks.length}}\">{{$index + 1}}</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>Етап підготовки</td>\n                <td ng-repeat=\"stage in sport.stages\" colspan=\"{{stage.weeks.length}}\">{{stage.name}}</td>\n            </tr>\n            <tr>\n                <td>% річного циклу</td>\n                <td ng-repeat=\"stage in sport.stages\" colspan=\"{{stage.weeks.length}}\">{{stage.percentOfSummary}}</td>\n            </tr>\n            <tr>\n                <td>Об’єм циклу</td>\n                <td ng-repeat=\"stage in sport.stages\" colspan=\"{{stage.weeks.length}}\">{{summary * stage.percentOfSummary / 100| number : 1}}</td>\n            </tr>\n            <tr>\n                <td>Тиждень</td>\n                <td ng-repeat=\"stage in sport.stages| flattenWeeks\">{{$index + 1}}</td>\n            </tr>\n            <tr>\n                <td>Періодизація (% від обєму 4-тижневого циклу)</td>\n                <td ng-repeat=\"stage in sport.stages| flattenWeeks\">{{stage.periodization}}</td>\n            </tr>\n            <tr style=\"color: #3276b1\">\n                <td>Тижневий об’єм</td>\n                <td ng-repeat=\"stage in sport.stages| flattenWeeks\">{{summary * stage.parent.percentOfSummary * stage.periodization / 10000| number : 1}}</td>\n            </tr>\n\n            <tr>\n                <td colspan=\"{{sport.stages.length * sport.stages[0].weeks.length + 1}}\">&nbsp;</td>\n            </tr>\n\n            <tr>\n                <td colspan=\"{{sport.stages.length * sport.stages[0].weeks.length + 1}}\">Нижче: відсотковий розподіл тижневого об’єму між окремими тренувальними компонентами підготовки на кожному 4-тижневому циклі</td>\n            </tr>\n\n            <tr ng-repeat=\"component in components\">\n                <td>{{component.label}}</td>\n                <td ng-repeat=\"stage in sport.stages\" colspan=\"{{stage.weeks.length}}\">{{stage.componentPercents[component.name]}}</td>\n            </tr> \n\n            <tr>\n                <td colspan=\"{{sport.stages.length * sport.stages[0].weeks.length + 1}}\">&nbsp;</td>\n            </tr>\n\n            <tr>\n                <td colspan=\"{{sport.stages.length * sport.stages[0].weeks.length + 1}}\">Нижче: розподіл часу між різними видами діяльності (помножте тижневий об’єм тренувального компонента на відсоткову величину для конкретного виду діяльності)</td>\n            </tr>\n\n            <tr ng-repeat=\"component in components\">\n                <td>{{component.label}} <p ng-show=\"sport.showPartsFor[component.name] && part.componentPercents[component.name]\" ng-repeat=\"part in sport.parts\"  class=\"sport-part sport-part-label\">{{part.name}} {{part.componentPercents[component.name]}}%</p></td>\n                <td ng-repeat=\"stage in sport.stages| flattenWeeks\">                            \n                    {{summary * stage.parent.componentPercents[component.name] * stage.parent.percentOfSummary * stage.periodization / 1000000| number : 1}}\n                    <p ng-show=\"sport.showPartsFor[component.name]\" ng-repeat=\"part in sport.parts\"  class=\"sport-part\">{{summary * part.componentPercents[component.name] * stage.parent.componentPercents[component.name] * stage.parent.percentOfSummary * stage.periodization / 100000000| number : 1}}</p>\n                </td>\n            </tr>\n        </tbody>\n    </table>\n</form>");}]);;
 var app = angular.module('trainingPlan', ['templates'])
         .filter('flattenWeeks', function () {
             return function (rows) {
@@ -17084,6 +17084,426 @@ app.controller('TrainingPlanCtrl', function ($scope) {
         {name: "force", label: "Сила"}];
 
     $scope.sports = [
+         {
+            name: "Довгий дуатлон",
+            showPartsFor: {
+                speed: true,
+                distance: true,
+                race: true,
+                interval: true,
+                superDistance: true,
+                mountainInterval: true,
+                force: false
+            },
+            parts: [
+                {
+                    name: "Велосипед",
+                    componentPercents: {
+                        speed: 50,
+                        distance: 60,
+                        race: 60,
+                        interval: 60,
+                        superDistance: 60,
+                        mountainInterval: 60
+                    }
+                },
+                {
+                    name: "Біг",
+                    componentPercents: {
+                        speed: 50,
+                        distance: 40,
+                        race: 40,
+                        interval: 40,
+                        superDistance: 40,
+                        mountainInterval: 40
+                    }
+                }
+            ],
+            stages: [
+                {
+                    name: "Базовий",
+                    percentOfSummary: 7.5,
+                    weeks: [
+                        {
+                            periodization: 23
+                        },
+                        {
+                            periodization: 26
+                        },
+                        {
+                            periodization: 29
+                        },
+                        {
+                            periodization: 22
+                        }
+                    ],
+                    componentPercents: {
+                        speed: 0,
+                        distance: 15,
+                        race: 0,
+                        interval: 0,
+                        superDistance: 65,
+                        mountainInterval: 0,
+                        force: 20
+                    }
+                },
+                {
+                    name: "Базовий",
+                    percentOfSummary: 8.5,
+                    weeks: [
+                        {
+                            periodization: 23
+                        },
+                        {
+                            periodization: 26
+                        },
+                        {
+                            periodization: 29
+                        },
+                        {
+                            periodization: 22
+                        }
+                    ],
+                    componentPercents: {
+                        speed: 0,
+                        distance: 10,
+                        race: 0,
+                        interval: 5,
+                        superDistance: 60,
+                        mountainInterval: 5,
+                        force: 20
+                    }
+                },
+                {
+                    name: "Інтенсивний",
+                    percentOfSummary: 9.5,
+                    weeks: [
+                        {
+                            periodization: 23
+                        },
+                        {
+                            periodization: 26
+                        },
+                        {
+                            periodization: 29
+                        },
+                        {
+                            periodization: 22
+                        }
+                    ],
+                    componentPercents: {
+                        speed: 0,
+                        distance: 10,
+                        race: 0,
+                        interval: 5,
+                        superDistance: 60,
+                        mountainInterval: 10,
+                        force: 15
+                    }
+                },
+                {
+                    name: "Інтенсивний",
+                    percentOfSummary: 10,
+                    weeks: [
+                        {
+                            periodization: 20
+                        },
+                        {
+                            periodization: 30
+                        },
+                        {
+                            periodization: 20
+                        },
+                        {
+                            periodization: 30
+                        }
+                    ],
+                    componentPercents: {
+                        speed: 0,
+                        distance: 10,
+                        race: 5,
+                        interval: 10,
+                        superDistance: 60,
+                        mountainInterval: 5,
+                        force: 10
+                    }
+                },
+                {
+                    name: "Піковий",
+                    percentOfSummary: 8.5,
+                    weeks: [
+                        {
+                            periodization: 20
+                        },
+                        {
+                            periodization: 30
+                        },
+                        {
+                            periodization: 20
+                        },
+                        {
+                            periodization: 30
+                        }
+                    ],
+                    componentPercents: {
+                        speed: 0,
+                        distance: 15,
+                        race: 10,
+                        interval: 15,
+                        superDistance: 50,
+                        mountainInterval: 0,
+                        force: 10
+                    }
+                },
+                {
+                    name: "Змагання",
+                    percentOfSummary: 8,
+                    weeks: [
+                        {
+                            periodization: 20
+                        },
+                        {
+                            periodization: 30
+                        },
+                        {
+                            periodization: 20
+                        },
+                        {
+                            periodization: 30
+                        }
+                    ],
+                    componentPercents: {
+                        speed: 0,
+                        distance: 15,
+                        race: 15,
+                        interval: 15,
+                        superDistance: 50,
+                        mountainInterval: 0,
+                        force: 5
+                    }
+                }
+            ]
+        },
+        {
+            name: "Маунтинбайк (крос-кантрі)",
+            showPartsFor: {
+                speed: true,
+                distance: true,
+                race: true,
+                interval: true,
+                superDistance: true,
+                mountainInterval: true,
+                force: false
+            },
+            parts: [
+                {
+                    name: "Шосе",
+                    componentPercents: {
+                        speed: 60,
+                        distance: 60
+                    }
+                },
+                {
+                    name: "Крос-кантрі",
+                    componentPercents: {
+                        speed: 40,
+                        distance: 40
+                    }
+                },
+                {
+                    name: "Контрольні на шосейному",
+                    componentPercents: {
+                        race: 25
+                    }
+                },
+                {
+                    name: "Маунтинбайк",
+                    componentPercents: {
+                        race: 75
+                    }
+                },
+                {
+                    name: "Велосипед",
+                    componentPercents: {
+                        interval: 60,
+                        superDistance: 60,
+                        mountainInterval: 60
+                    }
+                },
+                {
+                    name: "Біг",
+                    componentPercents: {
+                        interval: 40,
+                        superDistance: 40,
+                        mountainInterval: 40
+                    }
+                }
+            ],
+            stages: [
+                {
+                    name: "Базовий",
+                    percentOfSummary: 7,
+                    weeks: [
+                        {
+                            periodization: 23
+                        },
+                        {
+                            periodization: 26
+                        },
+                        {
+                            periodization: 29
+                        },
+                        {
+                            periodization: 22
+                        }
+                    ],
+                    componentPercents: {
+                        speed: 0,
+                        distance: 15,
+                        race: 0,
+                        interval: 0,
+                        superDistance: 60,
+                        mountainInterval: 5,
+                        force: 20
+                    }
+                },
+                {
+                    name: "Базовий",
+                    percentOfSummary: 8,
+                    weeks: [
+                        {
+                            periodization: 23
+                        },
+                        {
+                            periodization: 26
+                        },
+                        {
+                            periodization: 29
+                        },
+                        {
+                            periodization: 22
+                        }
+                    ],
+                    componentPercents: {
+                        speed: 0,
+                        distance: 15,
+                        race: 0,
+                        interval: 5,
+                        superDistance: 50,
+                        mountainInterval: 10,
+                        force: 20
+                    }
+                },
+                {
+                    name: "Інтенсивний",
+                    percentOfSummary: 9,
+                    weeks: [
+                        {
+                            periodization: 23
+                        },
+                        {
+                            periodization: 26
+                        },
+                        {
+                            periodization: 29
+                        },
+                        {
+                            periodization: 22
+                        }
+                    ],
+                    componentPercents: {
+                        speed: 5,
+                        distance: 15,
+                        race: 5,
+                        interval: 10,
+                        superDistance: 45,
+                        mountainInterval: 10,
+                        force: 10
+                    }
+                },
+                {
+                    name: "Інтенсивний",
+                    percentOfSummary: 9.5,
+                    weeks: [
+                        {
+                            periodization: 20
+                        },
+                        {
+                            periodization: 30
+                        },
+                        {
+                            periodization: 20
+                        },
+                        {
+                            periodization: 30
+                        }
+                    ],
+                    componentPercents: {
+                        speed: 5,
+                        distance: 10,
+                        race: 10,
+                        interval: 10,
+                        superDistance: 45,
+                        mountainInterval: 10,
+                        force: 10
+                    }
+                },
+                {
+                    name: "Піковий",
+                    percentOfSummary: 8.5,
+                    weeks: [
+                        {
+                            periodization: 20
+                        },
+                        {
+                            periodization: 30
+                        },
+                        {
+                            periodization: 20
+                        },
+                        {
+                            periodization: 30
+                        }
+                    ],
+                    componentPercents: {
+                        speed: 5,
+                        distance: 10,
+                        race: 10,
+                        interval: 5,
+                        superDistance: 50,
+                        mountainInterval: 10,
+                        force: 10
+                    }
+                },
+                {
+                    name: "Змагання",
+                    percentOfSummary: 8,
+                    weeks: [
+                        {
+                            periodization: 20
+                        },
+                        {
+                            periodization: 30
+                        },
+                        {
+                            periodization: 20
+                        },
+                        {
+                            periodization: 30
+                        }
+                    ],
+                    componentPercents: {
+                        speed: 5,
+                        distance: 10,
+                        race: 15,
+                        interval: 5,
+                        superDistance: 50,
+                        mountainInterval: 10,
+                        force: 5
+                    }
+                }
+            ]
+        },
         {
             name: "Шосейний велосипед (розділки, критеріуми, шосейні перегони)",
             stages: [
@@ -17419,7 +17839,7 @@ app.controller('TrainingPlanCtrl', function ($scope) {
             ]
         },
         {
-            name: "Марафонський біг",            
+            name: "Марафонський біг",
             stages: [
                 {
                     name: "Базовий",
@@ -18012,7 +18432,7 @@ app.controller('TrainingPlanCtrl', function ($scope) {
                     }
                 }
             ]
-        }        
+        }
     ];
 
     $scope.sport = $scope.sports[0];
