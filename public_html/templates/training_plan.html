@@ -1,29 +1,43 @@
 <style>
-    table, th, td {
+    .training-plan-for-endurance select{
+        width: auto;
+    }
+    .training-plan-for-endurance table,
+    .training-plan-for-endurance th,
+    .training-plan-for-endurance td {
         border: 1px solid black;
     }
-    table{
+    .training-plan-for-endurance table{
         border-collapse: collapse;
+        width: auto;
     }
-    td:not(:first-child){
+    .training-plan-for-endurance table td,
+    .training-plan-for-endurance table td:first-child,
+    .training-plan-for-endurance table td:last-child{
+        padding: 0.4em 1px;
+        line-height: 1em;
+    }
+    .training-plan-for-endurance table td:not(:first-child){
         text-align: center;
     }
-    td[colspan="25"]{
+    .training-plan-for-endurance table td[colspan="25"]{
         color: #7A7A7A;
         font-weight: bold;
     }
-    .sport-part{
+    .training-plan-for-endurance .sport-part{
         font-size: 0.8em;
+        padding: 0;
+        margin: 10px 0;
     }
-    .sport-part-label{
+    .training-plan-for-endurance .sport-part-label{
         text-align: right;
     }
-    .training-plan-export{
+    .training-plan-for-endurance .training-plan-export{
         float: right;
     }
 </style>
 
-<form ng-app="trainingPlan" ng-controller="TrainingPlanCtrl">
+<form ng-app="trainingPlan" ng-controller="TrainingPlanCtrl" class="training-plan-for-endurance">
     <p>
         <label for="training-plan-sport">Вид спорту:</label>                  
         <select ng-model="sport" ng-options="sport as sport.name for sport in sports" id="training-plan-sport"></select>
